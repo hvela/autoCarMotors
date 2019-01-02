@@ -276,4 +276,5 @@ void loop()
   
   delay(5000);
   Serial.println("ho");
+  Serial.flush();
 }
