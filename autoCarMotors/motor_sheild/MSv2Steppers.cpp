@@ -55,8 +55,6 @@ class MyAccelStepper: public AccelStepper
        }
        void setCurrentPosition(){
           AccelStepper::setCurrentPosition(0);
-          Serial.print("setCurrentPosition currentPosition=");
-          Serial.println(AccelStepper::currentPosition());
        }
        
        ~MyAccelStepper(){
@@ -127,8 +125,6 @@ class Steppers: public MultiStepper{
           return index; 
         }
       }
-      Serial.print("getSavedStepperIndex, curStepperIndex=");
-      Serial.println(curStepperIndex);
       return 255;
     }
     
@@ -170,16 +166,10 @@ class Steppers: public MultiStepper{
         stepperObjects[curStepperIndex]->setSpeed(100);
         MultiStepper::addStepper(*stepperObjects[curStepperIndex]);//super class's method
         steppersIndexes[curStepperIndex][0] = shield;
-        Serial.print("add stepper shield = ");
-        Serial.println(shield);
         steppersIndexes[curStepperIndex][1] = stepperNumb;
         moves[curStepperIndex] = 0;
         
-        Serial.print("add stepper stepperNumb = ");
-        Serial.println(stepperNumb);
         curStepperIndex++;
-        Serial.print("setCurrentPosition currentPosition=");
-        //Serial.println(AccelStepper::currentPosition());
       }
     }
 
@@ -197,11 +187,6 @@ class Steppers: public MultiStepper{
      */
     void setToMove(uint8_t index, long moveAmount){
        moves[index] += moveAmount;//added += back in
-       Serial.print("setToMove moves[index] =");
-       Serial.println(moves[index]);
-       Serial.print("setToMove index =");
-       Serial.println(index);//this is 255, which is wrong
-       
     }
 
     /**
@@ -212,12 +197,14 @@ class Steppers: public MultiStepper{
     void myMoveTo(){
       //Serial.println("move to " + String(curStepperIndex));//getting printed as m?
       long * posArr = getPos_resetMoves();
+      /*
       for(int myMoveToIndex = 0; myMoveToIndex < curStepperIndex; myMoveToIndex++){
         Serial.print("myMoveTo posArr[");
         Serial.print(myMoveToIndex);
         Serial.print("]=");
         Serial.println(posArr[myMoveToIndex]);
       }
+      */
       MultiStepper::moveTo(posArr);
       MultiStepper::runSpeedToPosition();
       delete[] posArr;
@@ -242,18 +229,7 @@ class Steppers: public MultiStepper{
       long * posArr = new long [curStepperIndex + 1];// need to put on "free store"
       //memcpy(posArr, moves, curStepperIndex + 1);
       //TODO: You might need this if the data isn't copied!!!
-      Serial.println("HERE");
-      for (int pRI=0; pRI < curStepperIndex; pRI++){
-        
-        Serial.print("getPos_resetMoves Moves[");
-        Serial.print(pRI);
-        Serial.print("]= ");
-        Serial.println(moves[pRI]);
-        Serial.print("currentPosition = ");
-        Serial.println(stepperObjects[pRI]->currentPosition());
-        Serial.print("pRI = ");
-        Serial.println(pRI);
-        
+      for (int pRI=0; pRI < curStepperIndex; pRI++){        
         //use the memcpy instead of this...
         posArr[pRI] = stepperObjects[pRI]->currentPosition() + moves[pRI];
         moves[pRI] = 0;//
@@ -299,13 +275,6 @@ void setToMove(char *message, int shieldInt, String *toWrite){
     if(groups[group] == NULL){
       groups[group] = new Steppers();
     }
-    Serial.print("groups[");
-    Serial.print(group);
-    Serial.print("->addstepper(");
-    Serial.print(shieldInt);
-    Serial.print(", ");
-    Serial.print(stepperNumb);
-    Serial.println(");");
     groups[group]->addStepper(shieldInt, stepperNumb);
     //Adds the stepper if it doesn't exist.
     groups[group]->setToMove(shieldInt, stepperNumb, moveAmount);
