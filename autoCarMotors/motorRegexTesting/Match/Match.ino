@@ -101,8 +101,8 @@ class Steppers: public MultiStepper{
           return index; 
         }
       }
-      Serial.print("getSavedStepperIndex, curStepperIndex=");
-      Serial.println(curStepperIndex);
+      //Serial.print("getSavedStepperIndex, curStepperIndex=");
+      //Serial.println(curStepperIndex);
       return 255;
     }
     
@@ -127,10 +127,10 @@ class Steppers: public MultiStepper{
       }else if(getSavedStepperIndex(shield, stepperNumb) != 255){
          //stepper already added.
          //This will happen in most cases.
-         Serial.print("addStepper stepper already exists at ");
-         Serial.println(getSavedStepperIndex(shield, stepperNumb));
-         Serial.print("addStepper step index: ");
-         Serial.println(curStepperIndex);
+         //Serial.print("addStepper stepper already exists at ");
+         //Serial.println(getSavedStepperIndex(shield, stepperNumb));
+         //Serial.print("addStepper step index: ");
+         //Serial.println(curStepperIndex);
       }else if(!shieldConnected(shield)){
         // shield not connected.
          //this is actually redundant in the current form.
@@ -144,15 +144,15 @@ class Steppers: public MultiStepper{
         stepperObjects[curStepperIndex]->setSpeed(100);
         MultiStepper::addStepper(*stepperObjects[curStepperIndex]);//super class's method
         steppersIndexes[curStepperIndex][0] = shield;
-        Serial.print("add stepper shield = ");
-        Serial.println(shield);
+        //Serial.print("add stepper shield = ");
+        //Serial.println(shield);
         steppersIndexes[curStepperIndex][1] = stepperNumb;
         moves[curStepperIndex] = 0;
         
-        Serial.print("add stepper stepperNumb = ");
-        Serial.println(stepperNumb);
+        //Serial.print("add stepper stepperNumb = ");
+        //Serial.println(stepperNumb);
         curStepperIndex++;
-        Serial.print("setCurrentPosition currentPosition=");
+        //Serial.print("setCurrentPosition currentPosition=");
         //Serial.println(AccelStepper::currentPosition());
       }
     }
@@ -171,11 +171,12 @@ class Steppers: public MultiStepper{
      */
     void setToMove(uint8_t index, long moveAmount){
        moves[index] += moveAmount;//added += back in
+       /*
        Serial.print("setToMove moves[index] =");
        Serial.println(moves[index]);
        Serial.print("setToMove index =");
        Serial.println(index);//this is 255, which is wrong
-       
+       */
     }
 
     /**
