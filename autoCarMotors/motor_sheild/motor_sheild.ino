@@ -16,7 +16,7 @@ Make sure your line separator is set to newline, not carrage return
 String toWrite;
 char *usb;
 byte counter;
-const static String NAME = "motors";
+const static char* NAME = "motors";
 
 
 void MyFunction(){
@@ -51,10 +51,11 @@ void MyFunction(){
      if(checkMSv2Steppers(usb, &toWrite)){
        Serial.println(usb);
        Serial.println(toWrite);//passing the pointer
-     }else 
-     
-     if( strcmp(usb,"APIs") == 0 ){//tells what APIs are connected
-       Serial.println( "APIs_" + NAME + "_" + toWrite);
+     }else if( strcmp(usb,"APIs") == 0 ){//tells what APIs are connected
+       Serial.print( "APIs_");
+       Serial.print(NAME);
+       Serial.print("_");
+       Serial.println(toWrite);
        //you can check something else here (another API's check...)
      }
      counter = 0;
@@ -63,6 +64,8 @@ void MyFunction(){
       * when Serial.avaliable reads it, and that another message doesn't
       * get put into the buffer until after you've read this one.
       */
+    toWrite.remove(0);
+    Serial.flush();
    } 
 }
 

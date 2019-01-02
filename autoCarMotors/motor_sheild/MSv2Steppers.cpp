@@ -58,19 +58,19 @@ class MyAccelStepper: public AccelStepper
           Serial.print("setCurrentPosition currentPosition=");
           Serial.println(AccelStepper::currentPosition());
        }
-       /*
+       
        ~MyAccelStepper(){
          delete _myStepper;
        }
-       */
+       
    protected:
        void step0(long step) override{
           if(_myStepper == NULL){
             AccelStepper::step0(step);
           }else{
             (void)(step);
-            //Serial.print("step0 speed:");
-            //Serial.println(speed());
+            Serial.print("step0 speed:");
+            Serial.println(speed());
             if(speed() > 0){
               _myStepper->onestep(FORWARD, DOUBLE);
             }else{
@@ -96,13 +96,20 @@ class Steppers: public MultiStepper{
     Steppers():MultiStepper()
     {
       curStepperIndex = 0;
-      
-      //steppersIndexes = new uint8_t [10][2];
+
+      //Initialize all the steppers to 0s.
+      //[[shield, stepperNumb], [shield, stepperNumb]...]
+      for (int stepperInc = 0; stepperInc < 10; stepperInc ++){
+        for (int stepperSubInc = 0; stepperSubInc < 2; stepperSubInc ++){
+          steppersIndexes [stepperInc][stepperSubInc] = 0;
+        }
+      }
     }
     
     ~Steppers(){
       delete[] steppersIndexes;
       delete[] stepperObjects;
+      delete[] moves;
       //curStepperIndex = 0;
     }
     
@@ -224,9 +231,9 @@ class Steppers: public MultiStepper{
   //stepperNumb is uint8_T
     uint8_t steppersIndexes [10][2];//[[shield, stepper], [shield, stepper],...]
     //changing from uint8_t to boolean is pointless because they're both 8bits to the OS.
-    uint8_t curStepperIndex;
-    long moves [10];//see getPos_resetMoves() and moveTo()
-    MyAccelStepper *stepperObjects [10];
+    uint8_t curStepperIndex = 0;
+    long moves [10] = {};//see getPos_resetMoves() and moveTo()
+    MyAccelStepper *stepperObjects [10] = {};
     
     /**
      * This will add a long[] array to the free store (heap). You MUST delete it with delete[].
@@ -268,7 +275,7 @@ class Steppers: public MultiStepper{
  * Because That number isn't realistic, I set the number of possible groups to 100
  * which is more than enough for 99% of projects.
  */
-static Steppers *groups[16];
+static Steppers *groups[16] = {};
 
 /**
    * parses char *message: 
