@@ -336,7 +336,9 @@ boolean checkMSv2Steppers(char *message, String *toWrite){
   if(ms.Match(STEPPER_PATTERN_START) > 0){
     toWrite->concat(NAME);
     if(ms.Match(MOVE_PATTERN) > 0){
-      uint8_t shieldInt = getMotorShield(message);
+      uint8_t shieldInt = getMotorShield(message) + 96; 
+      //you have to add 96 because getMotorShield returns the index in the array;
+      //while code in this file expects the I2C address
       if(shieldInt < 0){//error
         if(shieldInt == -1){
           //set toWrite to an error message saying this isn't a valid number
@@ -347,7 +349,7 @@ boolean checkMSv2Steppers(char *message, String *toWrite){
           //unknown error
         }
       }else{//shield connected.
-        setToMove(message, shieldInt + 96, toWrite);// this is a hack. Fix it.
+        setToMove(message, shieldInt, toWrite);
       }
     }else if(ms.Match(EXE_PATTERN) > 0){
       //call run
