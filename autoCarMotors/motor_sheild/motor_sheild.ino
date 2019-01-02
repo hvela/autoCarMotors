@@ -24,7 +24,7 @@ void MyFunction(){
     //************read from serial**************
      while(Serial.available() > 0){
         char letter = Serial.read();
-        if(letter == '\n')
+        if(isspace(letter))
           break;//handles the last '\n' char of arduino serial input
         usb[counter] = letter;
         counter ++;
