@@ -69,8 +69,6 @@ class MyAccelStepper: public AccelStepper
             AccelStepper::step0(step);
           }else{
             (void)(step);
-            Serial.print("step0 speed:");
-            Serial.println(speed());
             if(speed() > 0){
               _myStepper->onestep(FORWARD, DOUBLE);
             }else{
@@ -301,6 +299,13 @@ void setToMove(char *message, int shieldInt, String *toWrite){
     if(groups[group] == NULL){
       groups[group] = new Steppers();
     }
+    Serial.print("groups[");
+    Serial.print(group);
+    Serial.print("->addstepper(");
+    Serial.print(shieldInt);
+    Serial.print(", ");
+    Serial.print(stepperNumb);
+    Serial.println(");");
     groups[group]->addStepper(shieldInt, stepperNumb);
     //Adds the stepper if it doesn't exist.
     groups[group]->setToMove(shieldInt, stepperNumb, moveAmount);
@@ -342,7 +347,7 @@ boolean checkMSv2Steppers(char *message, String *toWrite){
           //unknown error
         }
       }else{//shield connected.
-        setToMove(message, shieldInt, toWrite);
+        setToMove(message, shieldInt + 96, toWrite);// this is a hack. Fix it.
       }
     }else if(ms.Match(EXE_PATTERN) > 0){
       //call run

@@ -51,7 +51,9 @@ void MyFunction(){
      if(checkMSv2Steppers(usb, &toWrite)){
        Serial.println(usb);
        Serial.println(toWrite);//passing the pointer
-     }else if( strcmp(usb,"APIs") == 0 ){//tells what APIs are connected
+     }else
+     
+     if( strcmp(usb,"APIs") == 0 ){//tells what APIs are connected
        Serial.print( "APIs_");
        Serial.print(NAME);
        Serial.print("_");
