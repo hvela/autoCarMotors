@@ -242,6 +242,19 @@ void setup()
 {  
   Wire.begin();
   Serial.begin(9600);
+  //delete myStep;
+  //delete[] shields;
+  /*
+  for(int shieldsIndex = 0;  shieldsIndex < sizeof(shields)/sizeof(shields[0]); shieldsIndex ++){
+    shields[shieldsIndex] = nullptr;
+  }
+  */
+  /*
+   * The uno's reset button properly resets the sketch, but the Motor shield's reset button doesn't
+   */
+  
+  //delete[] groups;
+  
   
   myStep = new Steppers();
   //myStep->addStepper(0x60, 1);
