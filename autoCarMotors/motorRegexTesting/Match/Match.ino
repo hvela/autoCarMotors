@@ -186,12 +186,14 @@ class Steppers: public MultiStepper{
     void myMoveTo(){
       //Serial.println("move to " + String(curStepperIndex));//getting printed as m?
       long * posArr = getPos_resetMoves();
+      /*
       for(int myMoveToIndex = 0; myMoveToIndex < curStepperIndex; myMoveToIndex++){
         Serial.print("myMoveTo posArr[");
         Serial.print(myMoveToIndex);
         Serial.print("]=");
         Serial.println(posArr[myMoveToIndex]);
       }
+      */
       MultiStepper::moveTo(posArr);
       MultiStepper::runSpeedToPosition();
       delete[] posArr;
@@ -216,9 +218,10 @@ class Steppers: public MultiStepper{
       long * posArr = new long [curStepperIndex + 1];// need to put on "free store"
       //memcpy(posArr, moves, curStepperIndex + 1);
       //TODO: You might need this if the data isn't copied!!!
-      Serial.println("HERE");
+      
       for (int pRI=0; pRI < curStepperIndex; pRI++){
-        
+
+        /*
         Serial.print("getPos_resetMoves Moves[");
         Serial.print(pRI);
         Serial.print("]= ");
@@ -227,11 +230,12 @@ class Steppers: public MultiStepper{
         Serial.println(stepperObjects[pRI]->currentPosition());
         Serial.print("pRI = ");
         Serial.println(pRI);
-        
+        */
         //use the memcpy instead of this...
         posArr[pRI] = stepperObjects[pRI]->currentPosition() + moves[pRI];
         moves[pRI] = 0;//
       }
+      
       return posArr;
     }
 };

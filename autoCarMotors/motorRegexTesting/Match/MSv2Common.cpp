@@ -6,7 +6,7 @@
 
 
 
-Adafruit_MotorShield *shields [32];
+Adafruit_MotorShield *shields [32] = {};
 // Initialized as all null
 //https://stackoverflow.com/questions/2615071/c-how-do-you-set-an-array-of-pointers-to-null-in-an-initialiser-list-like-way
   // the above link described this initialization
@@ -70,6 +70,7 @@ uint8_t getMotorShield(uint8_t addr){
    if(addr < 96 || addr > 127){
      return -1;
    }else if(!shieldConnected(addr)){
+     Serial.println("shield not connected");
      return -2;
    }else if(!shields[addr - 96]){
       //makes sure it's a null pointer before setting it
