@@ -6,13 +6,15 @@
 
 
 
-Adafruit_MotorShield *shields [32];
+Adafruit_MotorShield *shields [32] = {};
 // Initialized as all null
 //https://stackoverflow.com/questions/2615071/c-how-do-you-set-an-array-of-pointers-to-null-in-an-initialiser-list-like-way
   // the above link described this initialization
   // shields holds pointer to the shield objects.
   // shields are addressed 0x60 to 0x7F for a total of 32 unique addresses.
   // In this array, [0] == address 0x60, [31] == address 0x7F
+  //TODO: you need to destroy shields when you're done with it.    
+  //Maybe make a class with a deconstructor?
 
 /*
  * converts a substring between A and B from message to a uint8_t
