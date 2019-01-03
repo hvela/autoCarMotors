@@ -21,8 +21,6 @@ const static char* NAME = "motors";
 
 void MyFunction(){
    if(Serial.available() > 0){
-     Serial.print("before function: ");
-     Serial.println(millis());
     //************read from serial**************
      while(Serial.available() > 0){
         char letter = Serial.read();
@@ -69,8 +67,6 @@ void MyFunction(){
       * get put into the buffer until after you've read this one.
       */
     toWrite.remove(0);
-    Serial.print("After function ");
-    Serial.println(millis());
     Serial.flush();
    } 
 }
