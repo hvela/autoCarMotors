@@ -28,7 +28,7 @@ static const String NAME = "MSv2Motors";
 /*
  * gets the motor, then sets the speed. Speed is between 00 (0) and FF (255)
  * 
- * pattern: ^MSv2Motors_[67][0-9A-Fa-f]_speed_[1-4]_[0-9a-fA-F]{2,2}$
+ * pattern: ^MSv2Motors_[67][0-9A-Fa-f]_speed_[1-4]_%x%x$
  *   - example: MSv2Motors_60_speed_1_10
  */
 boolean setMotorSpeed(char *message, Adafruit_MotorShield *shield){
@@ -36,7 +36,7 @@ boolean setMotorSpeed(char *message, Adafruit_MotorShield *shield){
    uint8_t intSpeed = substr2num(message, 22, 24);//make sure this is the right length
    shield->getMotor(motorAddr)->setSpeed(intSpeed);
    return true;
-};
+}
 
 /*
  * gets the motor, then sets the direction
@@ -93,31 +93,32 @@ boolean checkMSv2Motors(char *message, String *toWrite){
   // regex from: https://github.com/nickgammon/Regexp also see the installed examples
   if(ms.Match(SHIELD_PATTERN_START) > 0){
     toWrite->concat(NAME);
+    toWrite->concat(": ");
     //parse out which shield, set it as a variable
     Serial.println("match");//only works on the first one?
     int shieldInt = getMotorShield(message);
     if(shieldInt < 0){
        if(shieldInt == -1){
          //set toWrite to an error message saying this isn't a valid number
-         *toWrite = String("MotorShield: That isn't a valid shield address.");
+         *toWrite = String("That isn't a valid shield address.");
        }else if(shieldInt == -2){
-         *toWrite = String("MotorShield: Shield not attached."); 
+         *toWrite = String("Shield not attached."); 
        }
     }else{
       if(ms.Match(SPEED_PATTERN) > 0){
         //parse out params
         //set speed on the shield
         if(setMotorSpeed(message, shields[shieldInt])){
-          toWrite->concat("MotorShield: speed set success.");  
+          toWrite->concat("speed set success.");  
         }else{
-          toWrite->concat("MotorShield: speed set fail.");
+          toWrite->concat("speed set fail.");
         }
       }else if(ms.Match(DIR_PATTERN) > 0){
         //set direction
         if(setMotorDir(message, shields[shieldInt])){
-          toWrite->concat("MotorShield: direction set success.");
+          toWrite->concat("direction set success.");
         }else{
-          toWrite->concat("MotorShield: direction set failed.");
+          toWrite->concat("direction set failed.");
         }
       //ADD OTHER STUFF (SET SERVOS...)
         // note, people can put crap between the SHIELD_PATTERN_START and the parameter patterns, but this isn't really a problem
