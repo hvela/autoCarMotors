@@ -89,6 +89,7 @@ boolean setMotorDir(char *message, Adafruit_MotorShield *shield){
 */
 boolean checkMSv2Motors(char *message, String *toWrite){
   MatchState ms;
+  ms.Target(message);
   // converting to char array: https://www.arduino.cc/reference/en/language/variables/data-types/string/functions/tochararray/
   // regex from: https://github.com/nickgammon/Regexp also see the installed examples
   if(ms.Match(SHIELD_PATTERN_START) > 0){
