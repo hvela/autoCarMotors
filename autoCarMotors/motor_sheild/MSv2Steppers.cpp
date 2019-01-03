@@ -254,7 +254,7 @@ static Steppers *groups[16] = {};
 /**
    * parses char *message: 
    *      "^MSv2Steppers_[67]%x_move_[0-1]_[\-\+]%x%x%x_group_%x%x$" - total len = 35
-   * For these arameters: [uint8_t stepperNumb, long moveAmount, int group]
+   * For these parameters: [uint8_t stepperNumb, long moveAmount, int group]
    * 
    * Then uses these parameters to tell the Steppers object how much to move when an execute
    * is received.
