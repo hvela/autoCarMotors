@@ -21,6 +21,8 @@ const static char* NAME = "motors";
 
 void MyFunction(){
    if(Serial.available() > 0){
+     Serial.print("before function: ");
+     Serial.println(millis());
     //************read from serial**************
      while(Serial.available() > 0){
         char letter = Serial.read();
@@ -40,14 +42,14 @@ void MyFunction(){
   
      
      //***********do stuff with the serial input****************
-     /*
+     
      if(checkMSv2Motors(usb, &toWrite)){
        Serial.println(usb);
        //https://stackoverflow.com/questions/2229498/passing-by-reference-in-c
        Serial.println(toWrite);//passing the pointer
        //NAME + "_" + I wanted to add this, but they're different types
      }else 
-     */
+     
      if(checkMSv2Steppers(usb, &toWrite)){
        Serial.println(usb);
        Serial.println(toWrite);//passing the pointer
@@ -67,6 +69,8 @@ void MyFunction(){
       * get put into the buffer until after you've read this one.
       */
     toWrite.remove(0);
+    Serial.print("After function ");
+    Serial.println(millis());
     Serial.flush();
    } 
 }

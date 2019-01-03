@@ -96,7 +96,6 @@ boolean checkMSv2Motors(char *message, String *toWrite){
     toWrite->concat(NAME);
     toWrite->concat(": ");
     //parse out which shield, set it as a variable
-    Serial.println("match");//only works on the first one?
     int shieldInt = getMotorShield(message);
     if(shieldInt < 0){
        if(shieldInt == -1){
