@@ -10,8 +10,7 @@ Make sure your line separator is set to newline, not carrage return
 */
 
 #include <Wire.h>
-#include "MSv2Motors.h"
-#include "MSv2Steppers.h"
+#include "MSv2.h"
 
 String toWrite;
 char *usb;
@@ -41,23 +40,18 @@ void MyFunction(){
      
      //***********do stuff with the serial input****************
      
-     if(checkMSv2Motors(usb, &toWrite)){
+     if(checkMSv2(usb, &toWrite)){
        Serial.println(usb);
        //https://stackoverflow.com/questions/2229498/passing-by-reference-in-c
        Serial.println(toWrite);//passing the pointer
        //NAME + "_" + I wanted to add this, but they're different types
      }else 
      
-     if(checkMSv2Steppers(usb, &toWrite)){
-       Serial.println(usb);
-       Serial.println(toWrite);//passing the pointer
-     }else
-     
      if( strcmp(usb,"APIs") == 0 ){//tells what APIs are connected
        Serial.print( "APIs_");
        Serial.print(NAME);
        Serial.print("_");
-       Serial.println(toWrite);
+       Serial.println(toWrite); //this will print "APIs_motors_MSv2Steppers_MSv2Steppers" That's usually good, but not in this case.
        //you can check something else here (another API's check...)
      }
      counter = 0;

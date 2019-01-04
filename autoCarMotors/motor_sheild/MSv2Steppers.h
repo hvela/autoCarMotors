@@ -1,5 +1,5 @@
-#ifndef MSv2Common
-#define MSv2Common
+#ifndef MSv2Steppers
+#define MSv2Steppers
 
 #if (ARDUINO >=100)
   #include <Arduino.h>
