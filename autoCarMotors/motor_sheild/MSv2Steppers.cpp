@@ -329,13 +329,6 @@ boolean checkMSv2Steppers(char *message, String *toWrite){
     }
     return true;
   }else{
-    if(ms.Match(API_PATTERN) > 0){
-      //If this matches you still return false becasue it's not exclusively for this.
-      if(toWrite->length() > 0){
-        toWrite->concat("_");
-      }
-      toWrite->concat(NAME);
-    }
     return false;
   }
 }
