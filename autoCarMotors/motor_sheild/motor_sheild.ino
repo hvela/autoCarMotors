@@ -61,6 +61,7 @@ void MyFunction(){
       * get put into the buffer until after you've read this one.
       */
     toWrite.remove(0);
+    Serial.println("ready");
     Serial.flush();
    } 
 }
@@ -68,7 +69,7 @@ void MyFunction(){
 void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
   Serial.println("Adafruit Motorshield v2 - DC Motor test!");
-  Serial.println("start");
+  Serial.println("ready");
   toWrite = "";
   counter = 0;
   Wire.begin();// super important for my motor shield library
