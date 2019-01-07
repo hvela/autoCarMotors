@@ -13,7 +13,7 @@ Make sure your line separator is set to newline, not carrage return
 #include "MSv2.h"
 
 String toWrite;
-char *usb;
+char usb[40];
 byte counter;
 const static char* NAME = "motors";
 
@@ -68,9 +68,9 @@ void MyFunction(){
 void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
   Serial.println("Adafruit Motorshield v2 - DC Motor test!");
+  Serial.println("start");
   toWrite = "";
   counter = 0;
-  usb = new char[50];
   Wire.begin();// super important for my motor shield library
   //char letter;
 
