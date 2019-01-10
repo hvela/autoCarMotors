@@ -68,7 +68,7 @@ void MyFunction(){
 
 void setup() {
   Serial.begin(9600);           // set up Serial library at 9600 bps
-  Serial.println("Adafruit Motorshield v2 - DC Motor test!");
+  //Serial.println("Adafruit Motorshield v2 - DC Motor test!");
   Serial.println("ready");
   toWrite = "";
   counter = 0;
