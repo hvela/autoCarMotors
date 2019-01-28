@@ -78,9 +78,15 @@ void setup() {
    //Serial.onReceive(MyFunction);
 }
 
+
 void loop() {
-  MyFunction();
+  //pass
 }
 
-//TODO: Add a callback when Serial data is received
-//https://playground.arduino.cc/Serial/AttachReceiveFunction
+/**
+ * This function is called automatically when data is sent to the arduino over the serial
+ * port. It's essentially a callback.
+ */
+void serialEvent(){
+  MyFunction();
+}
